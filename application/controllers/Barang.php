@@ -81,10 +81,20 @@ class Barang extends CI_Controller
                 $getStock = $data['stock'] - $stockLama['stock'];
                 $procedure = "CALL log_barang (?,?,?)";
                 $this->db->query($procedure, array('action' => 'Penambahan STOCK', 'kode_barang' => $data['kode_barang'], 'stock' => $getStock));
-            } else {
+            } elseif ($data['stock'] < $stockLama['stock']) {
                 $getStock = $stockLama['stock'] - $data['stock'];
                 $procedure = "CALL log_barang (?,?,?)";
                 $this->db->query($procedure, array('action' => 'Pengurangan STOCK', 'kode_barang' => $data['kode_barang'], 'stock' => $getStock));
+            } else {
+                if ($stockLama['stock'] == $data['stock']) {
+                    $stockBaru = '0';
+                } elseif ($stockLama['stock'] < $data['stock']) {
+                    $stockBaru = $data['stock'] - $stockLama['stock'];
+                } elseif ($stockLama['stock'] > $data['stock']) {
+                    $stockBaru = $stockLama['stock'] - $data['stock'];
+                }
+                $procedure = "CALL log_barang (?,?,?)";
+                $this->db->query($procedure, array('action' => 'Update Barang', 'kode_barang' => $data['kode_barang'], 'stock' => $stockBaru));
             }
 
             $this->db->where('id', $id);

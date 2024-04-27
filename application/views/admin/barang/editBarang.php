@@ -42,7 +42,6 @@
         $('#harga_perbarang').number(true, 0, ',', '.');
         let user = "<?php $this->session->userdata('roleId'); ?>";
         if (user != 1) {
-            $('#harga_perbarang').attr('readonly', true);
             $('#kode_barang').attr('readonly', true);
         }
 
