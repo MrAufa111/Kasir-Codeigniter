@@ -53,7 +53,7 @@ class Auth extends CI_Controller
             }
         }
     }
-    public function logout()
+    public function logout()c
     {
         $user = $this->session->userdata('username');
         $role = $this->session->userdata('roleId');
